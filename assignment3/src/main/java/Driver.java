@@ -31,24 +31,20 @@ public class Driver extends Configured implements Tool {
     }
 
     public int run(String[] args) throws Exception {
-        if(args.length != 2) {
-            System.err.printf("Usage: %s needs 2 arguments: TrainingRatings.txt & movie_titles.txt", new Object[]{this.getClass().getSimpleName()});
-            return -1;
-        } else {
-            inputPath = args;
-            boolean movieJob = this.job("output/movie", "Top 10 Movies", DoubleWritable.class, MovieMapper.class, MovieReducer.class);
-            boolean userJob = this.job("output/user", "Top 10 Users", IntWritable.class, UserMapper.class, UserReducer.class);
-            if(movieJob) {
-                this.nameMapperJob();
-                this.outputMovies();
-            }
-
-            if(userJob) {
-                this.outputUsers();
-            }
-
-            return movieJob && userJob?0:1;
+        inputPath = new String[] {"/CS499_Assignment3/data/TrainingRatings.txt",
+                "/CS499_Assignment3/data/movie_titles.txt"};
+        boolean movieJob = this.job("output/movie", "Top 10 Movies", DoubleWritable.class, MovieMapper.class, MovieReducer.class);
+        boolean userJob = this.job("output/user", "Top 10 Users", IntWritable.class, UserMapper.class, UserReducer.class);
+        if(movieJob) {
+            this.nameMapperJob();
+            this.outputMovies();
         }
+
+        if(userJob) {
+            this.outputUsers();
+        }
+
+        return movieJob && userJob?0:1;
     }
 
     private boolean job(String outputPath, String jobName, Class outputValueClass, Class mapperClass, Class reducerClass) throws Exception {
