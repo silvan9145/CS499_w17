@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS499 Hackathon 3</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Input data</h2>
+        <form class="form-inline" id="formIndex">
+          <div class="form-group" style="width:80%">
+            <input type="number" class="form-control" style="width:15%" id="form1">
+            <input type="number" class="form-control" style="width:15%" id="form2">
+            <input type="number" class="form-control" style="width:15%" id="form3">
+            <input type="number" class="form-control" style="width:15%" id="form4">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $("#formIndex").submit(inputData);
+
+        function inputData(e) {
+            e.preventDefault();
+            var input1 = $("#form1").val();
+            var input2 = $("#form2").val();
+            var input3 = $("#form3").val();
+            var input4 = $("#form4").val();
+            console.log(input1 + ", " + input2 + ", " + input3 + ", " + input4)
+
+        }
+    </script>
+  </body>
+</html>
