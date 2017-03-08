@@ -10,14 +10,29 @@
   <body>
     <div class="jumbotron">
       <div class="container">
-        <h2>Input data</h2>
-        <form class="form-inline" id="formIndex">
+        <h2>Input new data</h2>
+        <form class="form-inline" id="formIndexInput">
           <div class="form-group" style="width:80%">
             <input type="number" class="form-control" style="width:15%" id="form1">
             <input type="number" class="form-control" style="width:15%" id="form2">
             <input type="number" class="form-control" style="width:15%" id="form3">
             <input type="number" class="form-control" style="width:15%" id="form4">
+            <input type="number" class="form-control" style="width:15%" id="form5">
             <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="container">
+        <h2>Predict based on input</h2>
+        <form class="form-inline" id="formIndexPredict">
+          <div class="form-group" style="width:80%">
+            <input type="number" class="form-control" style="width:15%" id="predict1">
+            <input type="number" class="form-control" style="width:15%" id="predict2">
+            <input type="number" class="form-control" style="width:15%" id="predict3">
+            <input type="number" class="form-control" style="width:15%" id="predict4">
+            <button type="submit" class="btn btn-primary">Predict</button>
+            <h3 id="resultLine" style="display:none">Result: <b><span id="result"></span></b></h3>
           </div>
         </form>
       </div>
@@ -26,7 +41,8 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        $("#formIndex").submit(inputData);
+        $("#formIndexInput").submit(inputData);
+        $("#formIndexPredict").submit(predict);
 
         function inputData(e) {
             e.preventDefault();
@@ -34,8 +50,32 @@
             var input2 = $("#form2").val();
             var input3 = $("#form3").val();
             var input4 = $("#form4").val();
-            console.log(input1 + ", " + input2 + ", " + input3 + ", " + input4)
+            var input5 = $("#form5").val();
 
+            var inputs = [input1, input2, input3, input4, input5];
+            $.getJSON('/handleinput', {
+                list: JSON.stringify(inputs)
+            }, function(data) {
+                alert("Inputs received successfully!");
+                console.log(data.result);
+            });
+        }
+
+        function predict(e) {
+            e.preventDefault();
+            var input1 = $("#predict1").val();
+            var input2 = $("#predict2").val();
+            var input3 = $("#predict3").val();
+            var input4 = $("#predict4").val();
+
+            var inputs = [input1, input2, input3, input4];
+            $.getJSON('/handlepredict', {
+                predicts: JSON.stringify(inputs)
+            }, function(data) {
+                $("#result").text(data.result[0]);
+                $("#resultLine").show();
+                console.log(data.result[0]);
+            });
         }
     </script>
   </body>
